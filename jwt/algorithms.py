@@ -427,7 +427,8 @@ if has_crypto:
                 return False
 
             try:
-                key.verify(der_sig, msg, ec.ECDSA(self.hash_alg()))
+                # https://github.com/jpadilla/pyjwt/issues/311#issuecomment-798830656
+                key.public_key().verify(der_sig, msg, ec.ECDSA(self.hash_alg()))
                 return True
             except InvalidSignature:
                 return False
